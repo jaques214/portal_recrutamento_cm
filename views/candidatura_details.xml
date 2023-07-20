@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="detail_page" name="applicants view">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure">
+                    <div class="container">
+                        <h3>
+                            <t t-esc="candidatura.name"/>
+                        </h3>
+                        <hr/>
+
+                        <div class="row mt-3">
+                            <div class="col-3 p-4" style="background-color: rgb(110, 160, 152); color: #fff;">
+                                <p>
+                                    <strong>Applicant Details:</strong>
+                                </p>
+                                <div class="ml8 d-flex flex-column">
+                                    <div class="d-inline-flex align-items-center mb8">
+                                        <i class="fa fa-user fa-fw mr8" role="img" style="font-size:26px;"/>
+                                        <p class="mb0">
+                                            <strong>Name:</strong>
+                                            <t t-esc="candidatura.partner_name"/>
+                                        </p>
+                                    </div>
+                                    <div class="d-inline-flex align-items-center mb8">
+                                        <i class="fa fa-id-card fa-fw mr8" role="img" style="font-size:26px;"/>
+                                        <p class="mb0">
+                                            <strong>Citizen Card:</strong>
+                                            <t t-esc="candidatura.partner_id.cc"/>
+                                        </p>
+                                    </div>
+                                    <div class="mt8 mb8">
+                                        <p style="margin-bottom:5px;">
+                                            <strong>Qualification Level:</strong>
+                                        </p>
+                                        <p class="mb0">
+                                            <t t-esc="nivel_habitacional"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-9 pt-4 pb-4">
+                                <div class="row">
+                                    <div class="text-right col">
+                                        <p>
+                                            <strong>Job Title:</strong>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <t t-esc="candidatura.job_id.name"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="text-right col">
+                                        <p>
+                                            <strong>State:</strong>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <t t-esc="candidatura_stage"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="text-right col">
+                                        <p>
+                                            <strong>Entity:</strong>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <t t-esc="candidatura.job_id.entity"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="text-right col">
+                                        <p>
+                                            <strong>Workplace:</strong>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <t t-esc="candidatura.job_id.workplace_address"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="text-right col">
+                                        <p>
+                                            <strong>Application Date:</strong>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <t t-esc="date_open"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <section class="mb16 mt16">
+                            <div class="text-center pt-2 pb-2" style="border: 0 solid #e3e3e3; border-width: 2px 0;"
+                                 t-if="candidatura.job_id.job_state == 'aberto' or candidatura.job_id.job_state == 'preselecao'">
+                                <i class="fa fa-info mt-2 mb-2" style="font-size: 30px;"/>
+                                <p class="mb-1">
+                                    <em>Your evaluations will be posted as soon as the following job offer's (<t
+                                            t-esc="candidatura.job_id.name"/>) state is Avaliação dos Candidatos
+                                    </em>
+                                    .
+                                </p>
+                                <p class="mb-1">
+                                    <em>We thank you for your pantience</em>
+                                </p>
+                                <a t-attf-href="/jobs/detail/{{ link }}-{{ candidatura.job_id.id }}#metodos">Voltar para
+                                    os métodos de Seleção
+                                </a>
+                            </div>
+                            <div class="container" t-else="">
+                                <h3 class="mb24">
+                                    Selection Method Evaluation
+                                </h3>
+                                <div style="overflow-y: scroll; overflow-x: hidden; max-height:200px;">
+                                    <t t-foreach="avaliacao" t-as="metodo_selecao">
+                                        <div class="d-flex flex-column flex-md-row mb8"
+                                             style="gap: 10px; border-bottom: 0 solid #e3e3e3; border-width: 2px 0;">
+                                            <div style="flex: 1;">
+                                                <h4>
+                                                    <strong>Selection Method</strong>
+                                                </h4>
+                                                <p t-field="metodo_selecao.nome_metodo"/>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <h4>
+                                                    <strong>Date/Time</strong>
+                                                </h4>
+                                                <p t-field="metodo_selecao.date_time"/>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <h4>
+                                                    <strong>Minimum Appraisal (0-20)</strong>
+                                                </h4>
+                                                <p t-field="metodo_selecao.valor_avaliacao"/>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <h4>
+                                                    <strong>Evaluation (%)</strong>
+                                                </h4>
+                                                <p t-field="metodo_selecao.ponderacao"/>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <h4>
+                                                    <strong>Evaluation</strong>
+                                                </h4>
+                                                <p t-field="metodo_selecao.valor_ponderado_avaliacao"/>
+                                            </div>
+
+                                        </div>
+                                    </t>
+                                </div>
+                                <p class="mt8">Total:
+                                    <t t-esc="num_avaliacao"/>
+                                </p>
+                            </div>
+                        </section>
+
+                        <section class="mt16 mb16">
+                            <h4>Linked Attachments:</h4>
+                            <t t-if="num_attachments == 1">
+                                <div t-if="documents > 0">
+                                    <ul>
+                                        <li>
+                                            <t t-esc="candidatura.attachment_ids.name"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </t>
+
+                            <t t-elif="num_attachments > 1">
+                                <div t-if="documents > 0">
+                                    <t t-foreach="candidatura.job_id.documentos_exigidos_id" t-as="documento">
+                                        <p>
+                                            <strong>
+                                                <t t-esc="documento.nome_anexo"/>
+                                                -
+                                            </strong>
+                                            <t t-esc="anexos_principais[documento_index].name"/>
+                                            (
+                                            <t t-esc="anexos_principais[documento_index].file_size"/>
+                                            bytes)
+                                        </p>
+                                    </t>
+                                </div>
+                                <dl>
+                                    <dt>Others:</dt>
+                                    <t t-foreach="outros_anexos" t-as="attachment">
+                                        <dd style="margin-left:40px;">-
+                                            <t t-esc="attachment.name"/>
+                                            (
+                                            <t t-esc="attachment.file_size"/>
+                                            bytes)
+                                        </dd>
+                                    </t>
+                                </dl>
+                            </t>
+
+                            <p>Total:
+                                <t t-esc="num_attachments"/>
+                                attachments
+                            </p>
+                            <p>Update Attachments</p>
+                            <form id="attachment_form" action="/attachments/form/update/" method="post"
+                                  enctype="multipart/form-data">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div class="form-group form-field o_website_form_custom">
+                                    <input type="file" class="form-control o_website_form_input" multiple="true"
+                                           data-show-upload="true" name="Resume"/>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg o_website_form_send">
+                                    Submit
+                                </button>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="partner_detail" inherit_id="website_partner.partner_detail">
+            <xpath expr="//t//div[@class='col-lg-4']//div[@t-field='partner.image_1920']" position="replace">
+                <div>
+                    <img class="img img-fluid d-block mx-auto mb16" src="/odoo_portal_module/static/src/img/Administrator.png"
+                         alt="profile_image"/>
+                </div>
+            </xpath>
+            <xpath expr="//t//div[@class='col-lg-8 mt32']" position="replace">
+                <div class="col-lg-8 mt32">
+                    <t t-if="partner">
+                        <div class="d-flex flex-column">
+                            <div class="d-inline-flex">
+                                <i class="fa fa-id-card fa-fw mr8" role="img" style="font-size:14px;"/>
+                                <div>
+                                    <p class="mb-1">
+                                        <strong>Citizen Card:</strong>
+                                        <span t-field="partner.cc"/>
+                                    </p>
+                                    <p class="mb-1">
+                                        <strong>VAT Number:</strong>
+                                        <span t-field="partner.vat"/>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-inline-flex">
+                                <i class="fa fa-birthday-cake fa-fw mr8" role="img" style="font-size:14px;"/>
+                                <p class="mb-1">
+                                    <strong>Birthday:</strong>
+                                    <span t-field="partner.bday"/>
+                                </p>
+                            </div>
+                            <div class="d-inline-flex">
+                                <i class="fa fa-graduation-cap fa-fw mr8" role="img" style="font-size:14px;"/>
+                                <p class="mb-1">
+                                    <strong>Qualification level:</strong>
+                                    <span t-field="partner.nivel_habitacional"/>
+                                </p>
+                            </div>
+                            <div class="d-inline-flex">
+                                <i class="fa fa-certificate fa-fw mr8" role="img" style="font-size:14px;"/>
+                                <p class="mb-1">
+                                    <strong>Academic formation:</strong>
+                                    <span t-field="partner.area_formacao"/>
+                                </p>
+                            </div>
+                        </div>
+                        <a role="button" href="/my/account" class="btn btn-sm btn-link">
+                            <i class="fa fa-pencil"/>
+                            Edit
+                        </a>
+                    </t>
+                    <t t-raw="right_column or ''"/>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,358 @@
+<odoo>
+    <data>
+        <template id="odoo_portal_module.newJobPage" inherit_id="website_hr_recruitment.detail">
+            <xpath expr="//div[@id='wrap']" position="replace">
+                <!-- Breadcrumb -->
+                <section class="mb16 bg-white">
+                    <div class="container">
+                        <div class="d-flex flex-column flex-md-row align-items-center">
+                            <div style="flex:2;">
+                                <label class="mb0 mt16">
+                                    <a href="/jobs">Jobs</a>
+                                </label>
+                                /
+                                <h1 class="mb0 mt0" t-field="job.name"/>
+                                <div class="d-flex align-items-baseline">
+                                    <i class="fa fa-map-marker fa-fw" role="img" aria-label="Address" title="Address"/>
+                                    <div>
+                                        <h4 class="mt0" t-field="job.address"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="mt0">
+                                        <strong>Application deadline:</strong>
+                                        <span t-field="job.apply_start_date"/>
+                                        -
+                                        <span t-field="job.apply_end_date"/>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="ml-md-5" style="flex:1;" t-if="not user_id._is_public()">
+                                <t t-if="size == 0">
+                                    <div t-if="job.job_state == 'finalizado' or job.job_state == 'cancelado'">
+                                        <span tabindex="0" data-bs-toggle="tooltip"
+                                              title="You can't submit anymore applications">
+                                            <button class="btn btn-primary w-100 float-md-right btn-lg mt-2 mb-2"
+                                                    type="button"
+                                                    disabled="disabled" style="cursor: not-allowed;">Submit
+                                                Application!
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div t-else="">
+                                        <a role="button" t-attf-href="/jobs/apply/#{job.id}"
+                                           class="btn btn-primary w-100 float-md-right btn-lg mt-2 mb-2">
+                                            Submit Application!
+                                        </a>
+                                    </div>
+                                </t>
+                                <t t-elif="size >= 1">
+                                    <div>
+                                        <span tabindex="0" data-bs-toggle="tooltip"
+                                              title="You can't submit anymore applications">
+                                            <button class="btn btn-primary w-100 float-md-right btn-lg mt-2 mb-2"
+                                                    type="button"
+                                                    disabled="disabled" style="cursor: not-allowed;">Submit
+                                                Application!
+                                            </button>
+                                        </span>
+                                    </div>
+                                </t>
+                                <t t-if="size == 1">
+                                    <div>
+                                        <a role="button" t-attf-href="/application/detail/#{applicantObj.id}"
+                                           class="btn btn-primary w-100 btn-lg float-md-right mt-2 mb-2">View Job Aplication
+                                        </a>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="container">
+                            <div class="d-flex flex-column flex-md-row justify-content-center m-4" style="gap: 3px;">
+                                <t t-foreach="estados" t-as="estado">
+                                    <div t-attf-class="p-3 text-center {{ estado['class'] }}">
+                                        <t t-esc="estado['value']"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <section class="pb16 pt16" style="border: 0 solid #e3e3e3; border-width: 2px 0;">
+                            <div class="container">
+                                <p class="mt0 lead" t-field="job.description"/>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Job Code:</strong>
+                                        <span t-field="job.cod_oferta"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Responsible Entity:</strong>
+                                        <span t-field="job.entity"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Agency/Service:</strong>
+                                        <span t-field="job.orgao"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Workplace:</strong>
+                                        <span t-field="job.workplace_address"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Offer Type:</strong>
+                                        <span t-field="job.tipoOferta"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Required Qualification Level:</strong>
+                                        <span t-field="job.nivel_habitacional_exigido"/>
+                                    </p>
+                                </div>
+                                <!--<div class="mb8">
+                                    <p>
+                                        <strong>Estado:</strong>
+                                        <span t-field="job.state"/>
+                                    </p>
+                                </div>-->
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Job Time Condition:</strong>
+                                        <span t-field="job.modalidade_vinculo"/>
+                                    </p>
+                                </div>
+                                <div t-if="job.regime != False" class="mb8">
+                                    <p>
+                                        <strong>Regime:</strong>
+                                        <span t-field="job.regime"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Complexity Degree:</strong>
+                                        <span t-field="job.grau_complexidade"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Remuneration:</strong>
+                                        <span t-field="job.remuneracao"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Monthly Supplement:</strong>
+                                        <span t-field="job.suplemento_mensal"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Authorization of members of the Government Article 30 LTFP:</strong>
+                                        <span t-field="job.autorizacao_artigo"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Organic Level:</strong>
+                                        <span t-field="job.nivel_organico"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Number of Vacancies:</strong>
+                                        <span t-field="job.expected_employees"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Competition Procedure Restriction:</strong>
+                                        <span t-field="job.restricao_procedimento_concursal"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Qualification Level Replacement:</strong>
+                                        <span t-field="job.substituto_nivel_habilitacional"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Applicants who cannot be admitted:</strong>
+                                        <span t-field="job.candidatos_sem_admissao"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Final Classification Formula:</strong>
+                                        <span t-field="job.formula_classificacao_final"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Forma Publicitação da Lista Unitária Final:</strong>
+                                        <span t-field="job.forma_publicitacao"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Quota for People with Disabilities:</strong>
+                                        <span t-field="job.quota_deficiencia"/>
+                                    </p>
+                                </div>
+                                <div class="mb8" t-if="job.requisitos_nacionalidade">
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch"
+                                               checked=""/>
+                                        <label class="custom-control-label" for="customSwitch">
+                                            Nacionality Requirements
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="pb16 pt16">
+                            <div class="container">
+                                <h3 class="mb24">
+                                    <strong>Mandatory Documents</strong>
+                                </h3>
+                                <div class="d-flex flex-column">
+                                    <t t-foreach="job.documentos_exigidos_id" t-as="documentos">
+                                        <div class="pb-2">
+                                            <i class="fa fa-link pr-2" style="font-size: 18px;"/>
+                                            <t t-esc="documentos.nome_anexo"/>
+                                            -
+                                            <t t-esc="documentos.descricao"/>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </section>
+
+                        <a id="metodos"/>
+                        <section class="pb16 pt16" style="border: 0 solid #e3e3e3; border-width: 2px 0;">
+                            <div class="container">
+                                <h3 class="mb24">
+                                    <strong>Predicted selection methods</strong>
+                                </h3>
+                                <div style="overflow-y: scroll; overflow-x: hidden; max-height:200px;">
+                                    <t t-foreach="metodos" t-as="metodo_selecao">
+                                        <div class="d-flex flex-column flex-md-row mb8"
+                                             style="gap: 10px; border-bottom: 0 solid #e3e3e3; border-width: 2px 0;">
+                                            <div style="flex: 1;">
+                                                <h4>
+                                                    <strong>Abbreviation</strong>
+                                                </h4>
+                                                <p t-field="metodo_selecao.sigla"/>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <h4>
+                                                    <strong>Method</strong>
+                                                </h4>
+                                                <p t-field="metodo_selecao.nome_metodo"/>
+                                            </div>
+                                            <div style="flex: 2;">
+                                                <h4>
+                                                    <strong>Description</strong>
+                                                </h4>
+                                                <p t-field="metodo_selecao.descricao"/>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <h4>
+                                                    <strong>Evaluation (%)</strong>
+                                                </h4>
+                                                <p t-field="metodo_selecao.ponderacao"/>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <h4>
+                                                    <strong>Minimum Appraisal (0-20)</strong>
+                                                </h4>
+                                                <p t-field="metodo_selecao.valoracao_minima"/>
+                                            </div>
+
+                                        </div>
+                                    </t>
+                                </div>
+                                <p class="mt8">Total:
+                                    <t t-esc="num_selection_methods"/>
+                                </p>
+                            </div>
+                        </section>
+
+                        <section class="pb16 pt16">
+                            <div class="container">
+                                <h4>
+                                    <strong>Jury</strong>
+                                </h4>
+                                <ul>
+                                    <!--                                    <p t-field="juris.name"/>-->
+                                    <t t-foreach="juris" t-as="juri">
+                                        <li>
+                                            <span t-field="juri.name"/>
+                                            -
+                                            <span t-field="juri.funcao"/>
+                                        </li>
+                                    </t>
+                                </ul>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Legal Relation:</strong>
+                                        <span t-field="job.relacao_juridica"/>
+                                    </p>
+                                </div>
+                                <div class="mb8">
+                                    <p>
+                                        <strong>Requirements for the Constitution of a Legal Relationship:</strong>
+                                    </p>
+                                    <p t-field="job.requisitos_constituicao_juridica"/>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="pb16 pt16" style="border: 0 solid #e3e3e3; border-width: 2px 0;">
+                            <div class="container">
+                                <h4>Authorization Act</h4>
+                                <t t-esc="job.ato_autorizacao"/>
+                            </div>
+                        </section>
+
+                        <!-- Datas -->
+                        <section class="pb16 pt16">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="mt16 mb16">
+                                    <h4>
+                                        <strong>Application Details</strong>
+                                    </h4>
+                                        <p class="mb1">
+                                            <strong>Application's Location:</strong>
+                                            <span t-field="job.local_candidatura"/>
+                                        </p>
+
+                                        <p class="mb1">
+                                            <strong>Applicant Method:</strong>
+                                            <span t-field="job.forma_candidatura"/>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </xpath>
+        </template>
+    </data>
+</odoo>
